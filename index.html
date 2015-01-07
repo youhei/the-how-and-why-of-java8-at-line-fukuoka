@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Why and How of Java8 at LINE Fukuoka</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
+
+  <link rel="stylesheet" href=".//css/reset.css" type="text/css"/>
+
+  
+
+  <link type="text/css" href=".//css/fg.menu.css" media="screen" rel="stylesheet" />
+  <link type="text/css" href=".//css/theme/ui.all.css" media="screen" rel="stylesheet" />
+  <link type="text/css" href=".//css/sh_style.css" rel="stylesheet" />
+  <link type="text/css" href=".//css/tipsy.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href=".//css/showoff.css" type="text/css"/>
+
+  <script type="text/javascript" src=".//js/jquery-1.4.2.min.js"></script>
+  <script type="text/javascript" src=".//js/jquery.cycle.all.js"></script>
+	<script type="text/javascript" src=".//js/jquery-print.js"></script>
+  <script type="text/javascript" src=".//js/jquery.batchImageLoad.js"></script>
+  <script type="text/javascript" src=".//js/jquery.parsequery.min.js"></script>
+  <script type="text/javascript" src=".//js/jquery.doubletap-0.1.js"></script>
+  <script type="text/javascript" src=".//js/jquery.tipsy.js"></script>
+
+  <script type="text/javascript" src=".//js/fg.menu.js"></script>
+  <script type="text/javascript" src=".//js/showoff.js"></script>
+  <script type="text/javascript" src=".//js/jTypeWriter.js"> </script>
+  <script type="text/javascript" src=".//js/sh_main.min.js"></script>
+  <script type="text/javascript" src=".//js/core.js"></script>
+  <script type="text/javascript" src=".//js/showoffcore.js"></script>
+  <script type="text/javascript" src=".//js/coffee-script.js"></script>
+
+  
+    
+      <script type="text/javascript" src=".//js/sh_lang/sh_java.min.js"></script>
+    
+  
+
+  
+
+  
+
+  <script type="text/javascript">
+    $(function(){
+      setupPreso(false, './');
+    });
+
+    editUrl  = "";
+  </script>
+
+</head>
+
+<body>
+
+<a tabindex="0" href="#search-engines" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="navmenu"><span class="ui-icon ui-icon-triangle-1-s"></span>slides</a>
+<div id="navigation" class="hidden"></div>
+<a tabindex="1" href="#search-engines" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="stylemenu"><span class="ui-icon ui-icon-triangle-1-s"></span>styles</a>
+<div id="stylepicker" class="hidden"></div>
+
+
+<div id="help">
+  <table>
+    <tr><td class="key">z, ?</td><td>toggle help (this)</td></tr>
+    <tr><td class="key">space, &rarr;</td><td>next slide</td></tr>
+    <tr><td class="key">shift-space, &larr;</td><td>previous slide</td></tr>
+    <tr><td class="key">b</td><td>blank screen</td></tr>
+    <tr><td class="key">d</td><td>toggle debug mode</td></tr>
+    <tr><td class="key">## &lt;ret&gt;</td><td>go to slide #</td></tr>
+    <tr><td class="key">c, t</td><td>table of contents (vi)</td></tr>
+    <tr><td class="key">f</td><td>toggle footer</td></tr>
+    <tr><td class="key">g</td><td>toggle follow</td></tr>
+    <tr><td class="key">r</td><td>reload slides</td></tr>
+    <tr><td class="key">n</td><td>toggle notes</td></tr>
+    <tr><td class="key">p</td><td>run preshow</td></tr>
+    <tr><td class="key">P</td><td>toggle pause</td></tr>
+    <tr><td class="key">s</td><td>choose style</td></tr>
+  </table>
+</div>
+
+<div class="buttonNav">
+  <input type="submit" onClick="prevStep();" value="prev"/>
+  <input type="submit" onClick="nextStep();" value="next"/>
+</div>
+
+<div id="preso"><center>loading presentation...</center></div>
+<div id="footer">
+  <span id="followMode"></span>
+  <span id="slideInfo"></span>
+  <span id="debugInfo"></span>
+  <span id="notesInfo"></span>
+  <span id="slideFilename"></span>
+  <img id="disconnected" src=".//css/disconnected.png" />
+</div>
+
+<div id="slides" class="offscreen" style="display:none;">
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/1">
+<h1>Why and How of Java8<br> at LINE Fukuoka</h1>
+
+<p><a href="https://twitter.com/youhei">@youhei</a></p>
+
+<p>Today's hashtag: #LINE_DM</p>
+</div>
+</div>
+<div id="one_01_slide" class="slide commandline incremental" data-transition="none">
+<div class="content commandline incremental" ref="one/01_slide/2">
+<h1>自己紹介</h1>
+
+<pre><code><code class="command">$ whoami</code>
+<code class="result">新田 洋平
+2014年9月入社
+LINE ファミリーアプリサーバーサイド開発担当
+ちょっと前は Python や AWS と戯れてました
+twitter: @youhei
+他もだいたい youhei
+</code></code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/3">
+<h1>今日これから話すこと</h1>
+
+<ul>
+<li>LINE Fukuoka の現状</li>
+<li>なぜ Java を使うようになったか</li>
+<li>なぜ Java8 を選んだのか</li>
+<li>どうやって Java8 で開発しているか</li>
+<li>実際使ってきてどうだったか</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/4">
+<h1>LINE Fukuoka の現状</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide bullets incremental" data-transition="none">
+<div class="content bullets incremental" ref="one/01_slide/5">
+<h2>福岡で作ってる LINE Family Apps</h2>
+
+<ul>
+<li>LINE 占い</li>
+<li>LINE MALL</li>
+<li>LINE Creaters Market</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/6">
+<h1>サーバサイドは全部 Perl</h1>
+
+<p>LINE Family App は Perl が主力です</p>
+</div>
+</div>
+<div id="one_01_slide" class="slide bullets incremental" data-transition="none">
+<div class="content bullets incremental" ref="one/01_slide/7">
+<h1>2014/9 入社間も無い頃</h1>
+
+<ul>
+<li>「Java でやるプロジェクトがあるので、</li>
+<li>youhei さんやってみます？」</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/8">
+<h1>Java？</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/9">
+<h1>Perl じゃないの？</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/10">
+<h1>ということで</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/11">
+<h1>六年ぶりに<br>Java はじめました</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/12">
+<h1>そもそもなぜ Java なのか</h1>
+
+<p>Why we use Java?</p>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/13">
+<h1>まずは社内の状況確認</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide incremental" data-transition="none">
+<div class="content incremental" ref="one/01_slide/14">
+<h1>確認結果</h1>
+
+<ul>
+<li>弊社 GitHub:enterprise で人気最上位の言語は Java</li>
+<li>Spring を使った Java のプロジェクト多数</li>
+<li>LINE バックエンドでも<a href="http://developers.linecorp.com/blog/ja/?p=3392">大活躍</a>
+</li>
+<li>Sonatype Nexus でライブラリを管理</li>
+<li>Jenkins もガンガン使ってる</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/15">
+<h1>めっちゃ Java 使ってた</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/16">
+<h1>知らなかっただけで<br>めっちゃ Java の会社でした</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/17">
+<h1>じゃあなぜ Java 8 なのか</h1>
+
+<p>Why we choose Java 8?</p>
+</div>
+</div>
+<div id="one_01_slide" class="slide incremental" data-transition="none">
+<div class="content incremental" ref="one/01_slide/18">
+<h1>プロジェクトアサイン当初</h1>
+
+<ul>
+<li>つくるもの: JSON-RPC Server</li>
+<li>ライブラリの選択は自由</li>
+<li>運用上の制約さえ守れば良く</li>
+<li>しがらみも少ない</li>
+<li>「よし、」</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/19">
+<h1>「できる限り新しいものを使おう」</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/20">
+<h1>なぜ新しいもの？</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide center" data-transition="none">
+<div class="content center" ref="one/01_slide/21">
+<p><img src="./file/one/lrg.jpg" alt="From Java to Ruby"></p>
+</div>
+</div>
+<div id="one_01_slide" class="slide bullets incremental" data-transition="none">
+<div class="content bullets incremental" ref="one/01_slide/22">
+<h1>2006 年頃の<br> Java から LL への流れ</h1>
+
+<ul>
+<li>「Java だとさくさく作れないから LL へ」</li>
+<li>元の木阿弥にならないために</li>
+<li>「さくさく作れる Java」でないといけない</li>
+<li>「重厚長大」は NG</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide bullets incremental" data-transition="none">
+<div class="content bullets incremental" ref="one/01_slide/23">
+<h1>社内をみると</h1>
+
+<ul>
+<li>Java 8 で先行している Project があった</li>
+<li>「<a href="http://www.slideshare.net/tokuhirom/java110sanitized">Java で 1 から 10 まで書いた話</a>」参照</li>
+<li>Perl をずっと書いてきた人にも馴染みやすい Java</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/24">
+<h1>これはすごい</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/25">
+<h1>乗るしかない<br>このビッグウェーブに</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/26">
+<h1>その結果、</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/27">
+<h1>現在の構成は<br>こうなりました</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide incremental small" data-transition="none">
+<div class="content incremental small" ref="one/01_slide/28">
+<h2>使っているモジュール</h2>
+
+<ul>
+<li>
+<font color="green">avans</font> - Tiny thin web application framework for Java 8</li>
+<li>
+<font color="green">webscrew</font> - Web application toolkit for Java servlet</li>
+<li>
+<font color="green">tinyorm</font> - O/R mapper for Java 8</li>
+<li>
+<font color="green">tinyvalidator</font> - Tiny validation framework</li>
+<li>
+<font color="green">mech2</font> - HTTP client</li>
+<li>jackson - Json parsing and generation</li>
+<li>lombok - Reduce boilerplate code</li>
+<li>緑字は社内に Author がいる OSS, 黒字はそうでない OSS</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/29">
+<h1>構成図</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide center" data-transition="none">
+<div class="content center" ref="one/01_slide/30">
+<p><img src="./file/one/overview.png" alt="overview"></p>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/31">
+<h1>この構成で</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/32">
+<h1>どうやって Java8 で開発しているか</h1>
+
+<p>How we use Java8?</p>
+</div>
+</div>
+<div id="one_01_slide" class="slide bullets incremental" data-transition="none">
+<div class="content bullets incremental" ref="one/01_slide/33">
+<h2>よく使う Java 8 の新機能</h2>
+
+<ol>
+<li>Optional</li>
+<li>lambda</li>
+<li>default method</li>
+<li>Stream API</li>
+</ol>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/34">
+<h2>よく使う Java 8 の新機能</h2>
+
+<ol>
+<li><strong>Optional</strong></li>
+<li>lambda</li>
+<li>default method</li>
+<li>Stream API</li>
+</ol>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/35">
+<h1>Optional</h1>
+
+<p>値が含まれている場合も<br>
+含まれていない場合もあるコンテナ・オブジェクト</p>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/36">
+<h1>コンテナ・オブジェクト</h1>
+
+<p>配列, List, Map などのデータ構造の総称</p>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/37">
+<h1>ランタイムに null 参照をさけるためのコンテナが</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/38">
+<h1>Optional</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide small" data-transition="none">
+<div class="content small" ref="one/01_slide/39">
+<h1>Optional の基本</h1>
+
+<p>「値がないかも」を明示して NullPointerException をさける<br>
+チェック漏れはコンパイラがチェックする</p>
+
+<pre class="sh_java"><code>// 値がないと nobody
+// Optional&lt;String&gt; maybeName
+String name = maybeName.orElse("nobody");
+// 値があると someMethod(d) を処理
+// Optional&lt;T&gt; data
+data.ifPresent(d -&gt; someMethod(d));</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/40">
+<h1>Real World Example</h1>
+
+<p>avans, tinyorm のコード例</p>
+</div>
+</div>
+<div id="one_01_slide" class="slide small" data-transition="none">
+<div class="content small" ref="one/01_slide/41">
+<h1>avans で Query Parameter が任意かどうかを明示する</h1>
+
+<p>利点はコード上に仕様が明記される、デフォルト値の考慮漏れもなくなる、の二点。</p>
+
+<pre class="sh_java"><code>@GET("/api/items")
+public WebResponse list(@Param("page") OptionalInt page) {
+    int pageNumber = page.orElse(1); // デフォルト値は 1</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide small" data-transition="none">
+<div class="content small" ref="one/01_slide/42">
+<h1>tinyorm で単一行の削除</h1>
+
+<p>SELECT FOR UPDATE した結果がある場合のみ DELETE を発行</p>
+
+<pre class="sh_java"><code>TinyORM db = TinyORM(connection);
+db.single(ItemRow.class)
+    .where("id=?", id)
+    .forUpdate()
+    .execute()  // Optional&lt;ItemRow&gt; を返す
+    .ifPresent(row -&gt; row.delete());
+    // ItemRow がある場合だけ DELETE!</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide incremental" data-transition="none">
+<div class="content incremental" ref="one/01_slide/43">
+<h1>Optional まとめ</h1>
+
+<ul>
+<li>安全なコードが書けるようになる</li>
+<li>コードのドキュメント性があがる</li>
+<li>Web層、DB層の API が対応しているとより強力</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/44">
+<h2>よく使う Java 8 の新機能</h2>
+
+<ol>
+<li>Optional</li>
+<li><strong>lambda</strong></li>
+<li>default method</li>
+<li>Stream API</li>
+</ol>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/45">
+<h1>ラムダ式は一種の糖衣構文</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/46">
+<h1>匿名クラスのインスタンス生成の<br>コードを置き換えられるイメージ</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide small incremental" data-transition="none">
+<div class="content small incremental" ref="one/01_slide/47">
+<h1>ただ匿名クラスのインスタンス生成の<br>糖衣構文ではない。</h1>
+
+<ul>
+<li>ラムダ式は匿名クラスとは異なるバイトコードを吐く</li>
+<li>invokedynamic で実行時にラムダオブジェクトを生成する処理に置き換わる</li>
+<li>匿名クラスファイル(Foo$1.class)を作らずに済むし、インスタンス生成のコストも下がる</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/48">
+<h1>ラムダ式の基本</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide small" data-transition="none">
+<div class="content small" ref="one/01_slide/49">
+<h1>ラムダ式の基本(Java 7 以前)</h1>
+
+<p>匿名クラスで関数を渡していた冗長な時代</p>
+
+<p>辞書順にソートするコード。</p>
+
+<pre class="sh_java"><code>// Java 7 以前の文法に沿った表現
+Collections.sort(lists, new Comparator&lt;String&gt;() {
+    public int compare(final String o1, String o2) {
+        return o1.compareTo(o2);
+    }
+});</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide small" data-transition="none">
+<div class="content small" ref="one/01_slide/50">
+<h1>ラムダ式の基本(Java 8 ラムダ式)</h1>
+
+<p>同じコードをラムダ式で書く。多くの要素を省略できる。</p>
+
+<pre class="sh_java"><code>// 省略なし
+Collections.sort(lists, (final String o1, final String o2) -&gt; {
+        return o1.compareTo(o2);
+    });
+
+// 処理が1行だとコードブロックの波括弧と return は省略可
+Collections.sort(lists,
+    (final String o1, final String o2) -&gt; o1.compareTo(o2));
+
+// 型推論で引数の型宣言を省略可。final の明示はできなくなる。
+// (引数が一個の場合、引数の括弧も省略可)
+Collections.sort(lists, (o1, o2) -&gt; o1.compareTo(o2));
+
+// メソッド参照
+Collections.sort(lists, String::compareTo);</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide small incremental" data-transition="none">
+<div class="content small incremental" ref="one/01_slide/51">
+<h1>実質的final</h1>
+
+<ul>
+<li>匿名クラスではエンクロージングクラス(匿名クラスを宣言しているクラス)の変数が final でない場合はアクセスすることは言語仕様上できなかった。</li>
+<li>ラムダ式とこの仕様は相性が良くない。そこで、</li>
+<li>ラムダ式でエンクロージングクラスの変数を利用した場合はその変数を「実質的 final」と定義した。その変数は final が付いているものとしてみなされる。</li>
+<li>変数に再代入してしまうと実質的 final ではなくなるのでラムダ式で使おうとするとコンパイルエラーになる。</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide small" data-transition="none">
+<div class="content small" ref="one/01_slide/52">
+<h1>実質的final(コード例)</h1>
+
+<p>familyName に値を代入するとコンパイルエラー。知らないと大変ハマる。</p>
+
+<p>ラムダ式内での値の変更もコンパイルエラー。</p>
+
+<pre class="sh_java"><code>String familyName = "Isono"; // 実質的 final
+family.forEach(
+    firstName -&gt; {
+        System.out.println(
+            String.format("%s %s", firstName, familyName)
+    });
+// familyName = "Fuguta"; このコメントを外すとコンパイルエラー</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide small" data-transition="none">
+<div class="content small" ref="one/01_slide/53">
+<h1>以上がラムダ式の言語仕様</h1>
+
+<p>ちょっと覚えることが多い</p>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/54">
+<h1>Real World Example</h1>
+
+<p>avans, tinyorm のコード例</p>
+</div>
+</div>
+<div id="one_01_slide" class="slide smaller" data-transition="none">
+<div class="content smaller" ref="one/01_slide/55">
+<h1>avans で CSV を返す</h1>
+
+<p>HttpServletResponse に依存した処理をラムダ式内で扱う。</p>
+
+<p>CallbackResponse のラムダ式は csv() 内ではなく avans に処理を返してから遅延実行される。</p>
+
+<pre class="sh_java"><code>@GET("/csv")
+public WebResponse csv() {
+    return new CallbackResponse(resp -&gt; {
+        resp.setContentType("text/csv; charset=UTF-8");
+        resp.setHeader("Content-Disposition",
+            "attachment;filename=my-file-name.csv");
+
+        CSVFormat format = CSVFormat.EXCEL;
+        try (Writer writer = resp.getWriter();
+             CSVPrinter csvPrinter = new CSVPrinter(writer, format)) {
+                csvPrinter.printRecord(
+                    Arrays.asList("こんにちは", "世界"));
+        }
+    });
+}</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide small" data-transition="none">
+<div class="content small" ref="one/01_slide/56">
+<h1>tinyorm で 複雑なクエリをマッピングする</h1>
+
+<p>GROUP BY したり JOIN する複雑なクエリは SQL を直接書くポリシー。</p>
+
+<p>ResultSet をラムダ式内で扱う。</p>
+
+<pre class="sh_java"><code>db.executeQuery(
+    "SELECT count(*) as cnt FROM item GROUP BY group_id",
+    rs -&gt; {
+        List&lt;Long&gt; result = new ArrayList&lt;&gt;();
+        while (rs.next()) {
+            result.add(rs.getLong("cnt"));
+        }
+        return result;
+    });</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide incremental" data-transition="none">
+<div class="content incremental" ref="one/01_slide/57">
+<h1>lambda まとめ</h1>
+
+<ul>
+<li>特殊な処理をシンプルに局所化できる<br>(関心の分離)</li>
+<li>リソース解放を意識しないコードを強制できる</li>
+<li>Web層、DB層のライブラリが対応してるとより強力</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/58">
+<h2>よく使う Java 8 の新機能</h2>
+
+<ol>
+<li>Optional</li>
+<li>lambda</li>
+<li><strong>default method</strong></li>
+<li>Stream API</li>
+</ol>
+</div>
+</div>
+<div id="one_01_slide" class="slide small" data-transition="none">
+<div class="content small" ref="one/01_slide/59">
+<h1>default method の基本</h1>
+
+<p>interface に default 実装を定義できるようになった。</p>
+
+<p>さらっと扱われがちだけどとても大きな変更点。</p>
+
+<pre class="sh_java"><code>interface Person {
+    String getFirstName;
+    String getFamilyName;
+    default String getFullName() {
+        return String.format("%s %s",
+            getFirstName(), getFamilyName());
+    }
+}</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide small" data-transition="none">
+<div class="content small" ref="one/01_slide/60">
+<h1>interface static method</h1>
+
+<p>static method も定義できるようになった。</p>
+
+<p>Collections, Paths のようなユーティリティメソッドを集めたコンパニオンクラスを<br>定義する理由は「これまでの慣習を尊重する」以外になくなった。 </p>
+
+<p>Collection, Path に static method を定義可能になったため。</p>
+
+<pre class="sh_java"><code>interface Person {
+    static Person of() {
+        return new DefaultPerson("Foo", "Bar");
+    }
+}</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/61">
+<h1>Real World Example</h1>
+
+<p>avans のコード例</p>
+</div>
+</div>
+<div id="one_01_slide" class="slide smaller" data-transition="none">
+<div class="content smaller" ref="one/01_slide/62">
+<h1>avans plugin を実装する</h1>
+
+<p>avans の plugin は Controller への Mix-in となっている。default method で実装する。</p>
+
+<p>interface は状態を持てないのでその部分を PluginStash として avans が提供している。</p>
+
+<pre class="sh_java"><code>// avans plugin
+public interface SessionMixin extends Controller {
+    static final String STASH_KEY = "session";
+
+    public default WebSessionManager getSession() {
+        final Object session = 
+            this.computePluginStashValueIfAbsent(
+                this.getClass(),
+                STASH_KEY, () -&gt; {
+                    return this.buildSessionManager();
+                });
+        return (WebSessionManager) session;
+    }
+    // 以下、省略
+
+// Controller
+public class FooController implements SessionMixin {</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide incremental" data-transition="none">
+<div class="content incremental" ref="one/01_slide/63">
+<h1>default method まとめ</h1>
+
+<ul>
+<li>interface に実装を持てることで継承で実装を追加できる</li>
+<li>必ずしも「継承よりコンポジション」ではなくなった</li>
+<li>Mix-in は Annotation と並んでフレームワークが拡張性を提供する優れた手段</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/64">
+<h2>よく使う Java 8 の新機能</h2>
+
+<ol>
+<li>Optional</li>
+<li>lambda</li>
+<li>default method</li>
+<li><strong>Stream API</strong></li>
+</ol>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/65">
+<h1>Stream API とは</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/66">
+<h1>Collection を宣言的に操作できる API</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide bullets incremental" data-transition="none">
+<div class="content bullets incremental" ref="one/01_slide/67">
+<ul>
+<li>ここまで出てきた</li>
+<li>Optional</li>
+<li>lambda</li>
+<li>default method</li>
+<li>を駆使している</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide smaller" data-transition="none">
+<div class="content smaller" ref="one/01_slide/68">
+<h1>Stream API の基本 - 従来の命令型スタイル</h1>
+
+<p>価格が20ドルより大きい場合は10%引きして値引きした商品の金額合計を計算</p>
+
+<pre class="sh_java"><code>public static void main(final String... args) {
+    int[] prices = {10, 20, 30, 40};
+    int totalOfDiscountedPrices = 0;
+
+    for(int price : prices) {
+        if (price &gt; 20) {
+            totalOfDiscountedPrices =
+                totalOfDiscountedPrices + (int) (price * 0.9);
+        }
+    }
+    System.out.println("Total of discounted prices: " + totalOfDiscountedPrices);
+}</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide smaller" data-transition="none">
+<div class="content smaller" ref="one/01_slide/69">
+<h1>Stream API の基本 - 関数型スタイル</h1>
+
+<p>同様の計算を関数型スタイルにする</p>
+
+<pre class="sh_java"><code>public static void main(final String... args) {
+    int[] prices = {10, 20, 30, 40};
+    int totalOfDiscountedPrices =
+        Arrays.stream(prices) // IntStream に変換
+            .filter(price -&gt; price &gt; 20) // 20 を超えるものを抜き出す
+            .map(price -&gt; (int) (price * 0.9)) // 0.9 掛けした値に変換
+            .sum(); // 合計する
+
+    System.out.println("Total of discounted prices: " + totalOfDiscountedPrices);
+}</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/70">
+<h1>一時的な値が不要で再代入がない</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/71">
+<h1>宣言的で間違いも起こりにくい</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/72">
+<h1>ただ、必ずしも短く書けるわけでもない</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/73">
+<h2>Stream API のインパクトは意外と小さい</h2>
+
+<h2>Stream を API で受け渡すことは少ない</h2>
+
+<h2>メソッド内の処理がシンプルになるのみ</h2>
+</div>
+</div>
+<div id="one_01_slide" class="slide small" data-transition="none">
+<div class="content small" ref="one/01_slide/74">
+<h1>Stream API と拡張 for 文の関係</h1>
+
+<ul>
+<li>Stream API の出現で「forEach を使えば for 文不要」という話題もあるが lambda の中でチェック例外を扱うよりは、拡張 for 文にしてチェック例外はフレームワークに任せた方が可読性が高いこともある</li>
+<li>Web アプリはチェック例外も Internal Server Error で処理しておしまい、というケースが多いので、現在は Stream API 一辺倒にはならずに拡張 for 文も使ってる</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide incremental" data-transition="none">
+<div class="content incremental" ref="one/01_slide/75">
+<h1>Stream API まとめ</h1>
+
+<ul>
+<li>型安全にある程度すっきり書ける(LL よりは冗長だけど)</li>
+<li>宣言的に書けるのでバグを埋め込みにくい</li>
+<li>とはいえ拡張 for 文も使ってる</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/76">
+<h1>以上が Java 8 の新機能を使ってみての所感</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/77">
+<h1>ただ、</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/78">
+<h1>もっとシンプルさが欲しい</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/79">
+<h1>そこで</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/80">
+<h1><img src="./file/one/lombokText.png" alt="lombok"></h1>
+
+<p><a href="http://projectlombok.org">http://projectlombok.org</a></p>
+</div>
+</div>
+<div id="one_01_slide" class="slide small" data-transition="none">
+<div class="content small" ref="one/01_slide/81">
+<h1>with lombok</h1>
+
+<pre class="sh_java"><code>import lombok.NonNull;
+
+public class NonNullExample extends Something {
+    private String name;
+
+    public NonNullExample(@NonNull Person person) {
+        super("Hello");
+        this.name = person.getName();
+    }
+}</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide small" data-transition="none">
+<div class="content small" ref="one/01_slide/82">
+<h1>Vanilla Java</h1>
+
+<pre class="sh_java"><code>import lombok.NonNull;
+
+public class NonNullExample extends Something {
+    private String name;
+
+    public NonNullExample(@NonNull Person person) {
+        super("Hello");
+        if (person == null) {
+            throw new NullPointerException("person");
+        }
+        this.name = person.getName();
+    }
+}</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/83">
+<h1>アノテーションで</h1>
+
+<h1>退屈なコードを減らす</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/84">
+<h1>そもそもなぜ<br>こんなことが可能か</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/85">
+<h1>lombok の仕組み</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/86">
+<h1>通常のコンパイルの流れ</h1>
+
+<p>javac や Eclipse Compiler for Java がソースコードを解釈して抽象構文木を生成し、バイトコードにコンパイルする</p>
+
+<ol>
+<li>ソースコード(.java)</li>
+<li>抽象構文木</li>
+<li>バイトコード(.class)</li>
+</ol>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/87">
+<h1>lombok の仕組み</h1>
+
+<p>コンパイル時に AnnotationProcessor を利用して取得した抽象構文木を変換している。internal な API を呼んでいるとか。</p>
+
+<ol>
+<li>ソースコード(.java)</li>
+<li>
+<strong>抽象構文木</strong> ← ココを横取りして書き換え</li>
+<li>バイトコード(.class)</li>
+</ol>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/88">
+<h1>この仕組みは何が嬉しいか?</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/89">
+<h1>ソースコード生成と違って</h1>
+
+<h1>取り扱いがラク</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/90">
+<h1>良くも悪くも</h1>
+
+<h1>痕跡が残らない</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/91">
+<h1>バイトコード変換と違って</h1>
+
+<h1>実行時に魔法はない</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/92">
+<h1>よく使う Annotation</h1>
+
+<ol>
+<li>@Data</li>
+<li>@Value</li>
+<li>@SneakyThrows</li>
+</ol>
+</div>
+</div>
+<div id="one_01_slide" class="slide small" data-transition="none">
+<div class="content small" ref="one/01_slide/93">
+<h1>@Data</h1>
+
+<p>JavaBeans の getter/setter, toString, hashCode, equals を生成する。</p>
+
+<p>Jackson で受け渡しする JSON オブジェクトなどに多用してる</p>
+
+<pre class="sh_java"><code>@Data
+public class ContactForm {
+    @Email // tinyvalidator
+    private String email;
+    @NotNull // tinyvalidator
+    private String body;
+}</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide small" data-transition="none">
+<div class="content small" ref="one/01_slide/94">
+<h1>@Value</h1>
+
+<p>@Data の不変オブジェクト版(setter が生成されない)。</p>
+
+<p>java.beans.ConstructorProperties でアノテーションされたコンストラクタを生成する。</p>
+
+<p>TinyORM は ConstructorProperties を解釈するため、Row を不変オブジェクトにできる。</p>
+
+<pre class="sh_java"><code>@Value
+@Table("contact") // tinyorm
+@EqualsAndHashCode(callSuper = false) // 継承先を考慮しない
+public class ContactRow extends Row&lt;ContactRow&gt; {
+    @Column // tinyorm
+    private String email;
+    @Column
+    private String body;
+}</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide small" data-transition="none">
+<div class="content small" ref="one/01_slide/95">
+<h1>@SneakyThrows</h1>
+
+<p>チェック例外を非チェック例外にして投げる。</p>
+
+<p>Internal Server Error を返すしかないような例外はチェックせず SneakyThrows を使う。</p>
+
+<p>ただ最近は SneakyThrows を使わず throws 節を宣言するのがトレンドになってきた。</p>
+
+<pre class="sh_java"><code>@POST("/upload")
+@SneakyThrows
+public WebResponse upload(@UploadFile("file") Part file) {
+    String body = IOUtils.toString(
+        file.getInputStream(), "UTF-8");
+    return this.renderText(body);
+}</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide small" data-transition="none">
+<div class="content small" ref="one/01_slide/96">
+<h1>lombok.val</h1>
+
+<p>final なローカル変数を短く宣言できる。使おうかと思ったが、IntelliJ IDEA が未対応なので断念。</p>
+
+<p>Eclipse でもエラーになるという噂がちらほら。</p>
+
+<p>ただ、今となってはダイヤモンド演算子で十分とも思う。</p>
+
+<pre class="sh_java"><code>import lombok.val;
+
+public class Main {
+    public void main(String... args) {
+        // lombok.val
+        val example = new ArrayList&lt;String&gt;();
+        // diamond operator
+        final ArrayList&lt;String&gt; example2 = new ArrayList&lt;&gt;();</code></pre>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/97">
+<h1>F.A.Q.</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide small bullets incremental" data-transition="none">
+<div class="content small bullets incremental" ref="one/01_slide/98">
+<h1>Q. テストは?</h1>
+
+<ul>
+<li>Model のテストと Controller のテストをしてる。</li>
+<li>Model のテストは MySQL をそのまま使う。</li>
+<li>Controller は tomcat-embed を起動して HTTP Client を使う。</li>
+<li>いわゆる end-to-end なテスト。</li>
+<li>別サービスへのアクセスは tomcat-embed と avans で Mock を書く。</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide small bullets incremental" data-transition="none">
+<div class="content small bullets incremental" ref="one/01_slide/99">
+<h1>Q. 静的解析とかしてる?</h1>
+
+<ul>
+<li>checkstyle, findbugs を使ってる。</li>
+<li>jenkins で動かしてる。</li>
+<li>Checkstyle は Java8 対応版を社内ビルドして使ってる。</li>
+<li>lombok.GetterLazy が FindBugs で怒られる...</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/100">
+<h1>Q. 社内に Author がいる Web Framework の利点とは?</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/101">
+<h1>現場のニーズに完璧にフィットする</h1>
+
+<p>必要にかられて作られている。</p>
+
+<p>最低限の必要な機能を提供している。</p>
+
+<p>足りない機能は Mix-in, 独自 Annotation で自分たちで拡張できる。</p>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/102">
+<h1>余分なコードがほぼゼロで見通しが良い</h1>
+
+<p>Spring Boot や Dropwizard より軽量</p>
+
+<p>また、どんな汎用 micro framework にも使わない機能のためのコード、使わないミドルウェアのためのコードは必ずあるもの。</p>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/103">
+<h1>実装の意図が把握しやすい</h1>
+
+<p>直接聞けることは良いことだ。</p>
+
+<p>非互換の変更が入るとすぐアナウンスをもらえる。</p>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/104">
+<h1>Q. avans, tinyorm 自体の良さとは?</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/105">
+<h1>Java 8 を前提としている</h1>
+
+<p>サービスのコードが自然と Java 8 らしいコードに矯正される。</p>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/106">
+<h1>依存がヒッジョーに少ない</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/107">
+<h1>よって外部要因に左右されにくい</h1>
+
+<p>最悪自分たちでなんとかできる、というビジネス面でのメリット。</p>
+
+<p>再び歩み始めた Java の継続的進化に追随しやすい、という技術面でのメリット。</p>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/108">
+<h1>覚えることが少ない</h1>
+
+<p>別のことに時間を使える</p>
+
+<p>Java SE 8 の言語仕様を知ったり、Servlet 3.x API を把握したり。</p>
+
+<p>良いコードの書き方を知ることに時間を割こう。</p>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/109">
+<h1>最後に</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide bullets incremental" data-transition="none">
+<div class="content bullets incremental" ref="one/01_slide/110">
+<h1>これは現時点でのスナップショット</h1>
+
+<ul>
+<li>弊社で Java 8 の本格利用は始まったばかり</li>
+<li>現在もより良い構成をブラッシュアップしてる最中</li>
+<li>紆余曲折を現場で体験出来ているのはエンジニアとしてとても幸せ</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/111">
+<h1>LINE Family App の Java は始まったばかり</h1>
+
+<p>やらなきゃいけないことも、やりたいこともまだまだたくさん</p>
+
+<p>だからこそ楽しい</p>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/112">
+<h1>ご清聴ありがとうございました</h1>
+</div>
+</div>
+<div id="one_01_slide" class="slide smaller" data-transition="none">
+<div class="content smaller" ref="one/01_slide/113">
+<h1>参考資料</h1>
+
+<ul>
+<li><a href="http://blog.64p.org/entry/2014/10/01/081703">LL から Java に移行した人がはまりがちなこと</a></li>
+<li><a href="http://www.slideshare.net/tokuhirom/java110sanitized">Java で 1 から 10 まで書いた話</a></li>
+<li><a href="http://book.impress.co.jp/books/1114101010">Java SE 8 実践プログラミング</a></li>
+<li><a href="http://www.oreilly.co.jp/books/9784873117041/">Java による関数型プログラミング</a></li>
+<li><a href="http://www.slideshare.net/nowokay/java-28986016">Java の lambda の裏事情</a></li>
+<li><a href="http://d.hatena.ne.jp/bitter_fox/20120218/1329585343">ProjectLambda・２部(ラムダ式(実質的にfinal・スコープ)～メソッド・コンストラクタ参照)</a></li>
+<li><a href="http://kagamihoge.hatenablog.com/entry/2014/02/07/204236">Lombokのチュートリアル記事Reducing Boilerplate Code with Project Lombokをテキトーに訳した</a></li>
+<li>
+<a href="https://github.com/tokuhirom/avans">avans</a>, <a href="https://github.com/tokuhirom/webscrew">webscrew</a>, <a href="https://github.com/tokuhirom/tinyorm">tinyorm</a>, <a href="https://github.com/tokuhirom/tinyvalidator">tinyvalidator</a>, <a href="https://github.com/tokuhirom/mech2">mech2</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="one_01_slide" class="slide " data-transition="none">
+<div class="content " ref="one/01_slide/114">
+<h1>質疑応答</h1>
+</div>
+</div>
+</div>
+<div id="pauseScreen">
+  PAUSED
+</div>
+
+</body>
+</html>
