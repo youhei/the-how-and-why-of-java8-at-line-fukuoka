@@ -2,4 +2,4 @@
 
 This is a [showoff](https://github.com/puppetlabs/showoff) presentation.
 
-Actual slide on [github pages](http://youhei.github.io/the-how-and-why-of-java8-at-line-fukuoka/).
+Actual slide on [github pages](http://youhei.github.io/why-and-how-of-java8-at-line-fukuoka/).
